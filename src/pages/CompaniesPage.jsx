@@ -21,6 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+
 export default function CompaniesPage() {
   const { formatCurrency } = useCurrency();
   const [companies, setCompanies] = useState([]);
