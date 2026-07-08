@@ -8,10 +8,17 @@ async function request(path, options = {}) {
     ...options.headers,
   };
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  } catch {
+    throw new Error(
+      `Cannot reach API at ${API_BASE}. Check VITE_API_URL and backend deployment.`
+    );
+  }
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: res.statusText }));
+    const err = await res.json().catch(() => ({ error: res.statusText || "Request failed" }));
     throw new Error(err.error || "Request failed");
   }
 

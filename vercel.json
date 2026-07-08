@@ -2,6 +2,9 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "env": {
+    "VITE_API_URL": "https://white-integrity-fleet-backend-rouge.vercel.app/api"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
