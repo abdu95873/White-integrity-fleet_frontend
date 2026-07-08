@@ -34,6 +34,7 @@ export default function CompaniesPage() {
   const [rangeLabel, setRangeLabel] = useState("");
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
+  
 
   const buildParams = () => {
     const params = new URLSearchParams({ page: String(page), limit: "20" });
