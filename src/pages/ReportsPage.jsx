@@ -105,9 +105,9 @@ export default function ReportsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Reports</h1>
           <p className="text-muted-foreground">
             Select any week, month, or year to view payroll reports
           </p>

@@ -129,7 +129,7 @@ export default function CommissionImportPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Commission & Tax Import</h1>
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Commission & Tax Import</h1>
         <p className="text-muted-foreground">
           Import courier commission and tax rates for the current default or a specific week. This
           does not create payment records — use Excel Upload for weekly payroll.

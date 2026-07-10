@@ -156,14 +156,14 @@ export default function AccountsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Accounts</h1>
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Accounts</h1>
           <p className="text-muted-foreground">
             User receivables, commission profit, and courier payouts
           </p>
         </div>
-        <Button variant="outline" onClick={syncAndLoad} disabled={syncing || loading}>
+        <Button variant="outline" className="self-start" onClick={syncAndLoad} disabled={syncing || loading}>
           <RefreshCw className={`mr-2 h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
           Refresh calculations
         </Button>

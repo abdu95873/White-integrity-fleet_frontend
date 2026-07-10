@@ -128,10 +128,10 @@ export default function CourierDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">{courier.name}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-bold sm:text-3xl">{courier.name}</h1>
             <Badge variant="secondary" className="capitalize">
               {courier.source}
             </Badge>
@@ -139,7 +139,7 @@ export default function CourierDetailPage() {
           <p className="font-mono text-muted-foreground">ID: {courier.externalId}</p>
           {courier.city && <p className="text-sm text-muted-foreground">{courier.city}</p>}
         </div>
-        <Button variant="outline" onClick={recalculatePending} disabled={saving}>
+        <Button variant="outline" className="self-start" onClick={recalculatePending} disabled={saving}>
           Recalculate pending
         </Button>
       </div>
