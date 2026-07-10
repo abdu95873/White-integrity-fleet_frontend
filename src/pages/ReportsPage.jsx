@@ -33,6 +33,7 @@ export default function ReportsPage() {
   const [data, setData] = useState([]);
   const [rangeLabel, setRangeLabel] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const buildParams = (format = "json") => {
     const params = new URLSearchParams({ period, format });
@@ -67,7 +68,13 @@ export default function ReportsPage() {
     load();
   }, [period, month, year, weekEnd, source]);
 
-  const exportFile = (format) => {
+  const exportFile = async (format) => {
+    if ((format === "pdf" || format === "chart-xlsx") && !source) {
+      setError("Select Glovo or Bolt platform for payment chart export");
+      return;
+    }
+
+    setError("");
     const params = buildParams(format);
     const label =
       period === "monthly"
@@ -75,7 +82,17 @@ export default function ReportsPage() {
         : period === "yearly"
           ? String(year)
           : weekEnd;
-    api.download(`/reports?${params}`, `report-${label}.${format === "csv" ? "csv" : "xlsx"}`);
+    const ext =
+      format === "csv" ? "csv" : format === "pdf" ? "pdf" : "xlsx";
+    const prefix =
+      format === "pdf" || format === "chart-xlsx"
+        ? `${source.toUpperCase()}-payment-chart-`
+        : "report-";
+    try {
+      await api.download(`/reports?${params}`, `${prefix}${label}.${ext}`);
+    } catch (err) {
+      setError(err.message || "Download failed");
+    }
   };
 
   const viewCourierReport = () => {
@@ -97,8 +114,22 @@ export default function ReportsPage() {
           {rangeLabel && (
             <p className="mt-1 text-sm font-medium text-primary">Showing: {rangeLabel}</p>
           )}
+          {error && <p className="mt-1 text-sm text-destructive">{error}</p>}
+          {!source && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Select Glovo or Bolt to export the payment chart PDF/Excel.
+            </p>
+          )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" onClick={() => exportFile("pdf")} disabled={!source}>
+            <Download className="mr-2 h-4 w-4" />
+            Payment Chart PDF
+          </Button>
+          <Button variant="outline" onClick={() => exportFile("chart-xlsx")} disabled={!source}>
+            <Download className="mr-2 h-4 w-4" />
+            Payment Chart Excel
+          </Button>
           <Button variant="outline" onClick={() => exportFile("csv")}>
             <Download className="mr-2 h-4 w-4" />
             CSV

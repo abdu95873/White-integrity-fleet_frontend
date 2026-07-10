@@ -7,6 +7,7 @@ import DashboardPage from "@/pages/DashboardPage";
 import CompaniesPage from "@/pages/CompaniesPage";
 import CourierDetailPage from "@/pages/CourierDetailPage";
 import UploadPage from "@/pages/UploadPage";
+import CommissionImportPage from "@/pages/CommissionImportPage";
 import PaymentsPage from "@/pages/PaymentsPage";
 import ReportsPage from "@/pages/ReportsPage";
 import AccountsPage from "@/pages/AccountsPage";
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/couriers" element={<Navigate to="/companies" replace />} />
               <Route path="/couriers/:id" element={<RedirectCourierDetail />} />
               <Route path="/upload" element={<UploadPage />} />
+              <Route path="/commission-import" element={<CommissionImportPage />} />
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/reports" element={<ReportsPage />} />
               <Route path="/accounts" element={<AccountsPage />} />

@@ -47,16 +47,31 @@ export const api = {
     }),
   download: async (path, filename) => {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${API_BASE}${path}`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    });
-    if (!res.ok) throw new Error("Download failed");
+    let res;
+    try {
+      res = await fetch(`${API_BASE}${path}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+    } catch {
+      throw new Error(
+        `Cannot reach API at ${API_BASE}. Check VITE_API_URL and backend deployment.`
+      );
+    }
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Download failed" }));
+      throw new Error(err.error || "Download failed");
+    }
+
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = filename;
+    a.download = filename.replace(/[/\\?%*:|"<>]/g, "-");
+    a.style.display = "none";
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   },
 };
