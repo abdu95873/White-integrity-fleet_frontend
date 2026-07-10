@@ -1,4 +1,7 @@
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+// Production always uses same-origin /api (Vercel rewrite). Dev uses Vite proxy or VITE_API_URL override.
+const API_BASE = import.meta.env.PROD
+  ? "/api"
+  : import.meta.env.VITE_API_URL || "/api";
 
 async function request(path, options = {}) {
   const token = localStorage.getItem("token");
