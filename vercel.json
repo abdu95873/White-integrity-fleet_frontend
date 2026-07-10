@@ -3,9 +3,13 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "env": {
-    "VITE_API_URL": "https://white-integrity-fleet-backend-rouge.vercel.app/api"
+    "VITE_API_URL": "/api"
   },
   "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://white-integrity-fleet-backend-rouge.vercel.app/api/:path*"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
