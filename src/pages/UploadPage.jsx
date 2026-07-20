@@ -293,7 +293,7 @@ export default function UploadPage() {
                 </Button>
                 <Button onClick={handleConfirmUpload} disabled={loading}>
                   <Check className="mr-2 h-4 w-4" />
-                  {loading ? "Uploading..." : "Confirm Upload"}
+                  {loading ? "Uploading (may take 1–2 min)..." : "Confirm Upload"}
                 </Button>
               </div>
             </div>
