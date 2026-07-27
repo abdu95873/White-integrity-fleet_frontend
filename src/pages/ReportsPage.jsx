@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PeriodFilters, toDateInputValue } from "@/components/filters/PeriodFilters";
+import { PeriodFilters, toDateInputValue, weekStartFromEnd } from "@/components/filters/PeriodFilters";
 import {
   Table,
   TableBody,
@@ -28,6 +28,7 @@ export default function ReportsPage() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(currentYear);
   const [weekEnd, setWeekEnd] = useState(toDateInputValue(new Date()));
+  const [weekStart, setWeekStart] = useState(weekStartFromEnd(toDateInputValue(new Date())));
   const [source, setSource] = useState("");
   const [courierId, setCourierId] = useState("");
   const [data, setData] = useState([]);
@@ -43,6 +44,7 @@ export default function ReportsPage() {
     } else if (period === "yearly") {
       params.set("year", String(year));
     } else if (period === "weekly") {
+      if (weekStart) params.set("weekStart", weekStart);
       params.set("weekEnd", weekEnd);
     }
     if (source) params.set("source", source);
@@ -66,7 +68,7 @@ export default function ReportsPage() {
 
   useEffect(() => {
     load();
-  }, [period, month, year, weekEnd, source]);
+  }, [period, month, year, weekStart, weekEnd, source]);
 
   const exportFile = async (format) => {
     if ((format === "pdf" || format === "chart-xlsx") && !source) {
@@ -154,7 +156,9 @@ export default function ReportsPage() {
             onMonthChange={setMonth}
             year={year}
             onYearChange={setYear}
+            weekStart={weekStart}
             weekEnd={weekEnd}
+            onWeekStartChange={setWeekStart}
             onWeekEndChange={setWeekEnd}
           />
 
